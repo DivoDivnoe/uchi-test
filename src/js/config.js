@@ -1,0 +1,16 @@
+const START_X = 0;
+const END_X = 20;
+
+const FIRST_SUMMAND_START = 6;
+const FIRST_SUMMAND_END = 9;
+const SUM_START = 11;
+const SUM_END = 14;
+
+export {
+  START_X,
+  END_X,
+  FIRST_SUMMAND_START,
+  FIRST_SUMMAND_END,
+  SUM_START,
+  SUM_END
+};
