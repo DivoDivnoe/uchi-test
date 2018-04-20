@@ -1,11 +1,10 @@
-import Model from '../model/Model';
 import LessonView from '../view/LessonView';
 import showScreen from '../showScreen';
 
 export default class Lesson {
-  constructor() {
-    this.model = new Model();
-    this.screen = new LessonView(this.model.state);
+  constructor(model, axisWidth) {
+    this.model = model;
+    this.screen = new LessonView(this.model.state, axisWidth);
 
     this.routes = [
       () => this.screen.renderFirstStep(),

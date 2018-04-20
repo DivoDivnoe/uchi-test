@@ -3,10 +3,10 @@ import {findRadius, findArcLength, findArcHeight} from '../utils';
 import {START_X, END_X} from '../config';
 
 export default class LessonView extends AbstractView {
-  constructor(state) {
+  constructor(state, axisLength) {
     super();
     this.state = state;
-    this.axisWidth = 815;
+    this.axisLength = axisLength;
     this.arcs = {
       alpha: 120,
       width: 2,
@@ -16,7 +16,7 @@ export default class LessonView extends AbstractView {
 
   get template() {
     const items = [];
-    const interval = this.axisWidth / (END_X - START_X + 1);
+    const interval = this.axisLength / (END_X - START_X + 1);
     let arcOffsetLeft = 0;
 
     for (let i = START_X; i <= END_X; i++) {
@@ -108,7 +108,7 @@ export default class LessonView extends AbstractView {
         </h2>
       </header>
       <div class="axis-wrapper">
-        <div class="axis" style="width: 815px">
+        <div class="axis" style="width: ${this.axisLength}px">
           ${items.map(drawAxisDash).join('')}
           ${[this.state.firstSummand, this.state.secondSummand]
             .map((item, i) => {

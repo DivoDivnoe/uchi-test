@@ -44,6 +44,7 @@ body {
 }
 
 .task__title {
+  margin: 0;
   padding: 30px 0 120px 0;
   font-weight: normal;
   font-size: 40px;
@@ -73,6 +74,11 @@ body {
   &--disabled {
     border: none;
   }
+}
+
+.app-wrapper {
+  width: 875px;
+  margin: 0 auto;
 }
 
 .axis-wrapper {
@@ -171,6 +177,7 @@ body {
   left: 50%;
   width: 30px;
   padding: 3px;
+  font-size: 16px;
   text-align: center;
   border-radius: 3px;
   border: 1px solid #bcbcbc;
@@ -200,5 +207,79 @@ body {
 
   &--animate {
     transform: rotate(117deg);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  body {
+    font-size: 15px;
+  }
+
+  .app-wrapper {
+    width: 540px;
+  }
+
+  .axis__dash {
+    height: 10px;
+  
+    &--bold {
+      height: 15px;
+    }
+  }
+
+  .axis__number {
+    &--bold {
+      font-size: 20px;
+    }
+  }
+
+  .axis__arc-arrow {
+    &--animate {
+      transform: rotate(115deg);
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  body {
+    font-size: 10px;
+  }
+
+  .app-wrapper {
+    width: 340px;
+  }
+
+  .axis-wrapper {
+    padding-bottom: 40px;
+  }
+
+  .axis {
+    &::before,
+    &::after {
+      width: 8px;
+      height: 2px;
+    }
+  }
+
+  .axis__dash {
+    height: 6px;
+  
+    &--bold {
+      height: 10px;
+    }
+  }
+
+  .axis__number {
+    bottom: -22px;
+    &--bold {
+      font-size: 15px;
+      line-height: 1.22;
+    }
+  }
+
+  .axis__arc-arrow {
+    &--animate {
+      transform: rotate(113deg);
+    }
   }
 }
