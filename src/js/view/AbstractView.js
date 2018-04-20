@@ -13,7 +13,7 @@ export default class AstractView {
 
   _render() {
     const div = document.createElement('div');
-    div.classList.add('.app-wrapper');
+    div.classList.add('app-wrapper');
     div.innerHTML = this.template;
 
     return div;
