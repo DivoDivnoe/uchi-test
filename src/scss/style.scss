@@ -167,7 +167,7 @@ body {
 .axis__arc {
   &--second {
     stroke: red;
-    transition: all $animation-time;
+    transition: stroke-dasharray $animation-time;
   }
 }
 
@@ -202,11 +202,25 @@ body {
 }
 
 .axis__arc-arrow {
-  transform-origin: center center;
+  position: absolute;
+  width: 0;
+  height: 0;
+  background-color: rgba(black, 0.5);
   transition: transform $animation-time;
 
   &--animate {
     transform: rotate(117deg);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 3px solid transparent;
+    border-bottom: 10px solid red;
+    transform-origin: center bottom;
+    transform: translateY(-100%) rotate(30deg);
   }
 }
 

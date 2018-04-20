@@ -54,13 +54,8 @@ export default class LessonView extends AbstractView {
             height="${svgDimension}" 
             viewPort="0 0 ${svgDimension} ${svgDimension}" 
             version="1.1" 
-            xmlns="http://www.w3.org/2000/svg"
+          xmlns="http://www.w3.org/2000/svg"
           >
-            <defs>
-              <marker id="arrowhead" markerWidth="5" markerHeight="3" refX="0" refY="1.5" orient="auto" stroke="#ff0000">
-                <polygon points="0 0, 5 1.5, 0 3" fill="#ff0000"/>
-              </marker>
-            </defs>
             <circle 
               class="axis__arc axis__arc--first"
               r="${radius}"
@@ -78,16 +73,10 @@ export default class LessonView extends AbstractView {
               stroke-width="${this.arcs.width}"
               stroke-dasharray="0.001 ${circleLength}"
             ></circle>
-            <line 
-              class="axis__arc-arrow"
-              x1="${svgDimension - 2}" 
-              y1="${svgDimension / 2 - 1}" 
-              x2="${svgDimension - 2}" 
-              y2="${svgDimension / 2 + 0.001 - 1}" 
-              stroke="#ff0000" stroke-width="2" 
-              marker-end="url(#arrowhead)"
-            >
           </svg>
+          <span 
+            class="axis__arc-arrow" 
+            style="top:${-svgTop}px;left:${(svgDimension - chordLength) / 2}px;transform-origin:${chordLength / 2}px ${radius + svgTop}px;"></span>
           <input class="axis__input" type="text">
         </div>
       `;
