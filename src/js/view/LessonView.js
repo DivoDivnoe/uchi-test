@@ -76,26 +76,26 @@ export default class LessonView extends AbstractView {
           </svg>
           <span 
             class="axis__arc-arrow" 
-            style="top:${-svgTop}px;left:${(svgDimension - chordLength) / 2}px;transform-origin:${chordLength / 2}px ${radius + svgTop}px;"></span>
+            style="top:${-svgTop}px;left:${(svgDimension - chordLength) / 2 -
+        this.arcs.width / 2}px;transform-origin:${chordLength / 2 +
+        1.5}px ${radius + svgTop + 1}px;"></span>
           <input class="axis__input" type="text">
         </div>
       `;
     };
 
     return `
-      <header class="task__header">
-        <h2 class="task__title">
-          <span 
-            class="task__title-item task__title-item--first"
-          >${this.state.firstSummand}</span> + <span 
-            class="task__title-item task__title-item--second"
-          >${this.state.secondSummand}</span> = <input 
-            class="task__title-sum task__title-sum--disabled" 
-            value="?" 
-            disabled
-          >
-        </h2>
-      </header>
+      <h2 class="app__title">
+        <span 
+          class="app__title-item app__title-item--first"
+        >${this.state.firstSummand}</span> + <span 
+          class="app__title-item app__title-item--second"
+        >${this.state.secondSummand}</span> = <input 
+          class="app__title-sum app__title-sum--disabled" 
+          value="?" 
+          disabled
+        >
+      </h2>
       <div class="axis-wrapper">
         <div class="axis" style="width: ${this.axisLength}px">
           ${items.map(drawAxisDash).join('')}
@@ -116,7 +116,7 @@ export default class LessonView extends AbstractView {
 
   renderFirstStep() {
     const arcWrapper = this.element.querySelector('.axis__arcs-wrapper--0');
-    const firstSummand = this.element.querySelector('.task__title-item--first');
+    const firstSummand = this.element.querySelector('.app__title-item--first');
 
     this.renderLessonStep(arcWrapper, this.state.firstSummand, firstSummand);
   }
@@ -124,20 +124,20 @@ export default class LessonView extends AbstractView {
   renderSecondStep() {
     const arcWrapper = this.element.querySelector('.axis__arcs-wrapper--1');
     const secondSummand = this.element.querySelector(
-      '.task__title-item--second'
+      '.app__title-item--second'
     );
 
     this.renderLessonStep(arcWrapper, this.state.secondSummand, secondSummand);
   }
 
   renderFinal() {
-    const sum = this.element.querySelector('.task__title-sum');
+    const sum = this.element.querySelector('.app__title-sum');
 
-    sum.classList.remove('task__title-sum--disabled');
+    sum.classList.remove('app__title-sum--disabled');
     sum.disabled = false;
     sum.value = '';
 
-    this.initInput(sum, this.state.sum, 'task__title-sum');
+    this.initInput(sum, this.state.sum, 'app__title-sum');
   }
 
   renderLessonStep(arcWrapper, stateItem, questionItem) {
@@ -150,8 +150,8 @@ export default class LessonView extends AbstractView {
         stateItem,
         'axis__input',
         questionItem,
-        'task__title-item'
-      )
+        'app__title-item'
+      );
     };
 
     setTimeout(() => this.animateArc(arcWrapper, transitionendHandler), 0);
@@ -161,8 +161,11 @@ export default class LessonView extends AbstractView {
     const currentArc = this.arcs.items[this.state.currentStep];
     const renderedArc = arcWrapper.querySelector('.axis__arc--second');
 
-    renderedArc.style.strokeDasharray = `${currentArc.arcLength} ${currentArc.circleLength - currentArc.arcLength}`;
-    arcWrapper.querySelector('.axis__arc-arrow').classList.add('axis__arc-arrow--animate');
+    renderedArc.style.strokeDasharray = `${currentArc.arcLength} ${currentArc.circleLength -
+      currentArc.arcLength}`;
+    arcWrapper
+      .querySelector('.axis__arc-arrow')
+      .classList.add('axis__arc-arrow--animate');
 
     renderedArc.addEventListener('transitionend', transitionendHandler);
   }
@@ -177,11 +180,20 @@ export default class LessonView extends AbstractView {
     const inputHandler = evt => {
       const target = evt.target;
 
-      if (+target.value === answer) {
+      const removeErrorClasses = () => {
         if (questionItem) {
           this.removeClass(questionItem, `${questionItemClassName}--wrong`);
         }
         this.removeClass(target, `${answerInputClassName}--wrong`);
+      };
+
+      if (!target.value.length) {
+        removeErrorClasses();
+        return false;
+      }
+
+      if (+target.value === answer) {
+        removeErrorClasses();
 
         this.disableInput(
           target,
